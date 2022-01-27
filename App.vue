@@ -14,4 +14,10 @@
 
 <style>
 	/*每个页面公共css */
+	
+	/* 引入iconfont */
+	@import url("/static/css/iconfont.css");
+	page{
+		height: 100%;
+	}
 </style>

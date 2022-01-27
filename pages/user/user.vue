@@ -1,6 +1,7 @@
 <template>
 	<view>
 		user
+		u
 	</view>
 </template>
 
