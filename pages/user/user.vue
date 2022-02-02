@@ -1,13 +1,13 @@
 <template>
 	<view class="body">
-		<view class="userinfo-box">
+		<view class="userinfo-box" @click="login()">
 			<view class="userinfo-face">
 				<image src="../../static/image/face.jpg" mode="widthFix">
 
 				</image>
 			</view>
 			<view class="userinfo-name">
-				<text>理智点</text>
+				<text>您还没有登录，点击登录</text>
 			</view>
 		</view>
 		<view class="userinfo-operations">
@@ -43,22 +43,97 @@
 				</uni-list-item>
 				<uni-list-item title="反馈" link to="/pages/vue/index/index" @click="onClick($event,1)">
 				</uni-list-item>
-				<uni-list-item title="关于我们" link="reLaunch" to="/pages/vue/index/index"
-					@click="onClick($event,1)"></uni-list-item>
+				<uni-list-item title="关于我们" link="reLaunch" to="/pages/vue/index/index" @click="onClick($event,1)">
+				</uni-list-item>
 			</uni-list>
 		</view>
+		<uni-popup ref="popup" type="message">
+			<uni-popup-message :type="msgType" :message="message" :duration="2000"></uni-popup-message>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
+	import businessApi from "../../request/BusinessApi.js"
+
 	export default {
 		data() {
 			return {
 				isLogin: false,
+				message: "",
+				userInfo:null,
+				msgType: "success"
 			}
 		},
 		methods: {
+			popMessage(type, msg) {
+				this.msgType = type
+				this.message = msg
+				console.log(this)
+				this.$refs.popup.open("top")
+			},
+			login() {
+				let _this = this;
+				//获取用户信息
+				uni.getUserProfile({
+					desc: "登陆您的账号(新用户自动注册)",
+					success(res) {
+						uni.showLoading({
+							mask: true,
+							title: "加载中"
+						})
+						let userInfo = res.userInfo
+						uni.login({
+							success(res) {
+								if (res.errMsg === "login:ok") {
+									let code = res.code
+									userInfo.openId = code
+									userInfo.nickname = userInfo.nickName
+									businessApi.login(userInfo).then(res => {
+										console.log(res)
+										let result = res.data
+										if (result.code === 200) { //登陆成功
+											let token = res.data.data
+											uni.setStorageSync('AccessToken', token);
+											_this.popMessage("success", "登陆成功")
+											_this.getUserInfo()
+										} else {
+											uni.hideLoading()
+											_this.popMessage("error", "登陆失败")
+										}
+									})
+								} else {
+									uni.showModal({
+										title: "抱歉",
+										content: "服务器错误，请稍后再试",
+										showCancel: false
+									})
+								}
 
+							}
+						})
+					},
+					fail(err) {
+						uni.showModal({
+							title: "抱歉",
+							content: "本小程序需要授权才能正常使用",
+							showCancel: false
+						})
+					}
+				})
+			},
+			getUserInfo() {
+				let _this = this;
+				businessApi.getUserInfo().then(res =>{
+					console.log(res)
+					_this.userInfo = res.data.data
+					uni.setStorageSync("userInfo",JSON.stringify(_this.userInfo))
+				})
+			}
+		},
+		onLoad: function() {
+			let _this = this
+			_this.getUserInfo()
 		}
 	}
 </script>
@@ -116,7 +191,8 @@
 				}
 			}
 		}
-		.other{
+
+		.other {
 			margin-top: 20rpx;
 		}
 	}

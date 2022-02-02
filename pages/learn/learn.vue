@@ -40,17 +40,67 @@
 </template>
 
 <script>
+	import BusinessApi from "../../request/BusinessApi.js"
+	//获取时区时间
+	function getLocalTime(i) {
+		if (typeof i !== "number") {
+			return new Date();
+		}
+		var d = new Date();
+		var len = d.getTime();
+		var offset = d.getTimezoneOffset() * 60000;
+		var utcTime = len + offset;
+		return new Date(utcTime + 3600000 * i);
+	}
+
+	//将数字转成指定位数
+	function fix(num, length) {
+		return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+	}
 	export default {
 		data() {
 			return {
-				sentence: "You can't let someone else's opinion tear you down.",
-				translated: "你不能被别人的看法打倒。",
+				sentence: "",
+				translated: "",
 				soundUrl: "",
 				isSignIn: false
 			}
 		},
 		methods: {
+			getDaliySentence() {
+				return new Promise((resolve, reject) => {
+					let _this = this
+					//获取每日一句
+					let time = getLocalTime(8)
+					var year = time.getFullYear()
+					var month = time.getMonth() + 1
+					var day = time.getDate()
+					let data = {
+						c: "dailysentence",
+						m: "getdetail",
+						title: year + "-" + fix(month, 2) + "-" + fix(day, 2)
+					}
+					BusinessApi.getDailySentence(data).then(res => {
+						if (res.statusCode === 200) {
+							let result = res.data
+							_this.sentence = result.content
+							_this.translated = result.note
+							_this.soundUrl = result.tts
+						}
+					})
+				})
 
+			}
+		},
+		onLoad() {
+			console.log("learn页面加载")
+			let _this = this
+			uni.showLoading({
+				title: '加载中',
+				mask: true
+			});
+			_this.getDaliySentence()
+			uni.hideLoading()
 		}
 	}
 </script>
