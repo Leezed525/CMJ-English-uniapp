@@ -2,12 +2,13 @@
 	<view class="body">
 		<view class="userinfo-box" @click="login()">
 			<view class="userinfo-face">
-				<image src="../../static/image/face.jpg" mode="widthFix">
+				<image :src="isLogin?userInfo.avatarUrl:'../../static/image/face.jpg'" mode="widthFix">
 
 				</image>
 			</view>
 			<view class="userinfo-name">
-				<text>您还没有登录，点击登录</text>
+				<!-- <text>您还没有登录，点击登录</text> -->
+				<text>{{isLogin?userInfo.nickname:"您还没有登录，点击登录"}}</text>
 			</view>
 		</view>
 		<view class="userinfo-operations">
@@ -59,17 +60,22 @@
 	export default {
 		data() {
 			return {
-				isLogin: false,
 				message: "",
-				userInfo:null,
-				msgType: "success"
+				msgType: "success",
+			}
+		},
+		computed: {
+			userInfo() {
+				return this.$store.state.userInfo
+			},
+			isLogin() {
+				return this.$store.state.isLogin
 			}
 		},
 		methods: {
 			popMessage(type, msg) {
 				this.msgType = type
 				this.message = msg
-				console.log(this)
 				this.$refs.popup.open("top")
 			},
 			login() {
@@ -90,19 +96,18 @@
 									userInfo.openId = code
 									userInfo.nickname = userInfo.nickName
 									businessApi.login(userInfo).then(res => {
-										console.log(res)
 										let result = res.data
 										if (result.code === 200) { //登陆成功
-											let token = res.data.data
-											uni.setStorageSync('AccessToken', token);
+											_this.$store.dispatch("login", res.data.data)
 											_this.popMessage("success", "登陆成功")
-											_this.getUserInfo()
-										} else {
 											uni.hideLoading()
+										} else {
 											_this.popMessage("error", "登陆失败")
+											uni.hideLoading()
 										}
 									})
 								} else {
+									uni.hideLoading()
 									uni.showModal({
 										title: "抱歉",
 										content: "服务器错误，请稍后再试",
@@ -122,19 +127,9 @@
 					}
 				})
 			},
-			getUserInfo() {
-				let _this = this;
-				businessApi.getUserInfo().then(res =>{
-					console.log(res)
-					_this.userInfo = res.data.data
-					uni.setStorageSync("userInfo",JSON.stringify(_this.userInfo))
-				})
-			}
+
 		},
-		onLoad: function() {
-			let _this = this
-			_this.getUserInfo()
-		}
+		onLoad: function() {}
 	}
 </script>
 

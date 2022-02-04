@@ -1,9 +1,20 @@
+//引入vuex
+import store from '../store'
+
 uni.addInterceptor('request', {
 	invoke(args) {
-		console.log(args)
+		console.log(args) 
 	},
 	success(res) {
-		// console.log(res)
+		console.log(res)
+		if(res.statusCode===403){
+			uni.showModal({
+				title: "抱歉",
+				content: res.data.msg,
+				showCancel: false
+			})
+			store.dispatch("logout")
+		}
 	},
 	fail(err) {
 		console.log(err)	
@@ -38,7 +49,6 @@ export const Request = (options) => {
 			},
 			// 这里的接口请求，如果出现问题就输出接口请求失败
 			fail: (err) => {
-				console.log(err)
 				reject(err)
 			}
 		})
