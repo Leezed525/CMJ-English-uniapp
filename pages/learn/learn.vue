@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="operations">
-			<view class="button-box">
+			<view class="button-box" @click="toLearn">
 				<button class="btn">
 					<view>
 						<text>\nlearn</text>
@@ -41,6 +41,8 @@
 
 <script>
 	import BusinessApi from "../../request/BusinessApi.js"
+	const innerAudioContext = uni.createInnerAudioContext();
+	
 	//获取时区时间
 	function getLocalTime(i) {
 		if (typeof i !== "number") {
@@ -67,6 +69,10 @@
 			}
 		},
 		methods: {
+			playSentence(){
+				innerAudioContext.src = this.soundUrl
+				innerAudioContext.play()
+			},
 			getDaliySentence() {
 				return new Promise((resolve, reject) => {
 					let _this = this
@@ -89,7 +95,25 @@
 						}
 					})
 				})
-
+			},
+			toLearn(){
+				//判断
+				let _this = this;
+				if(_this.$store.state.isLogin == true){
+					uni.navigateTo({
+						url:"../words/words"
+					})
+				}else{
+					uni.showModal({
+						content:"请先登录",
+						showCancel:false,
+						success(){
+							uni.switchTab({
+								url:"../user/user"
+							})
+						}
+					})
+				}
 			}
 		},
 		onLoad() {
@@ -158,12 +182,14 @@
 
 			.button-box {
 				width: 50%;
-				height: 50%;
+				height: 100%;
 				display: inline-block;
 
 				.btn {
+					height: 100%;
 					background-color: rgba(255, 255, 255, 0.5);
-					font-size: 50rpx;
+					font-size: 50rpx; 
+					line-height: 70rpx;
 				}
 			}
 		}

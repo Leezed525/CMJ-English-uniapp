@@ -3,30 +3,37 @@ import store from '../store'
 
 uni.addInterceptor('request', {
 	invoke(args) {
-		console.log(args) 
+		console.log(args)
 	},
 	success(res) {
 		console.log(res)
-		if(res.statusCode===403){
+		if (res.statusCode === 403) {
 			uni.showModal({
 				title: "抱歉",
 				content: res.data.msg,
 				showCancel: false
 			})
 			store.dispatch("logout")
+		}else if(res.data.code !== 200){
+			uni.showModal({
+				title: "抱歉",
+				content: res.data.msg,
+				showCancel: false
+			})
 		}
 	},
 	fail(err) {
-		console.log(err)	
+		console.log(err)
 		uni.showModal({
 			title: "抱歉",
-			content: "服务器错误，请稍后再试",
+			content: "网络错误，请稍后重试",
 			showCancel: false
 		})
+		store.dispatch("logout")
 	},
 	complete(res) {}
 })
-export const Request = (options) => {
+const Request = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: options.url, //接口地址：前缀+方法中传入的地址
@@ -54,3 +61,4 @@ export const Request = (options) => {
 		})
 	})
 }
+export default Request

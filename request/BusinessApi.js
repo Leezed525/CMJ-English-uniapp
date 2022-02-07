@@ -1,6 +1,4 @@
-import {
-	Request
-} from './Request.js'
+import Request from './Request.js'
 import baseURL from "./baseUrl.js"
 
 const getDailySentence = data => {
@@ -13,12 +11,12 @@ const getDailySentence = data => {
 const login = data => {
 	return Request({
 		url: baseURL + "business/login",
-		method:"POST",
+		method: "POST",
 		data: data,
 	})
 }
 
-const getUserInfo = data =>{
+const getUserInfo = data => {
 	return Request({
 		url: baseURL + "user/getUserInfo",
 	})

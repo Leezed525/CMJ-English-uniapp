@@ -1,12 +1,16 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-
-
-
 		{
 			"path": "pages/learn/learn",
 			"style": {
 				"navigationBarTitleText": "学习中心"
+			}
+		},
+		{
+			"path": "pages/words/words",
+			"style": {
+				"navigationBarTitleText": "背单词",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -20,8 +24,14 @@
 			"style": {
 				"navigationBarTitleText": "个人信息"
 			}
-		}
+		}, {
+			"path": "pages/learnComplete/learnComplete",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
