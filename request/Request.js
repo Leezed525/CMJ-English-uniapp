@@ -40,7 +40,7 @@ const Request = (options) => {
 			method: options.method || 'GET', //请求方法：传入的方法或者默认是“GET”
 			data: options.data || {}, //传递参数：传入的参数或者默认传递空集合
 			header: {
-				...options.headers,
+				...options.header,
 				'AccessToken': uni.getStorageSync('AccessToken') //自定义请求头信息
 			},
 			success: (res) => {

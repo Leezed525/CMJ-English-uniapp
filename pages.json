@@ -2,6 +2,14 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 
 		{
+			"path": "pages/completeWordList/completeWordList",
+			"style": {
+				"navigationBarTitleText": "单词列表",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
 			"path": "pages/learn/learn",
 			"style": {
 				"navigationBarTitleText": "学习中心"
@@ -33,7 +41,6 @@
 				"navigationBarTitleText": "个人信息"
 			}
 		}
-
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

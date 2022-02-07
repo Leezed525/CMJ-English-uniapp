@@ -16,17 +16,9 @@ const login = data => {
 	})
 }
 
-const getUserInfo = data => {
-	return Request({
-		url: baseURL + "user/getUserInfo",
-	})
-}
-
-
 const BusinessApi = {
 	getDailySentence,
 	login,
-	getUserInfo
 }
 
 export default BusinessApi

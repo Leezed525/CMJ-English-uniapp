@@ -3,7 +3,6 @@
 		<view class="userinfo-box" @click="login()">
 			<view class="userinfo-face">
 				<image :src="isLogin?userInfo.avatarUrl:'../../static/image/face.jpg'" mode="widthFix">
-
 				</image>
 			</view>
 			<view class="userinfo-name">
@@ -11,7 +10,7 @@
 				<text>{{isLogin?userInfo.nickname:"您还没有登录，点击登录"}}</text>
 			</view>
 		</view>
-		<view class="userinfo-operations">
+		<view class="userinfo-operations" v-if="isLogin">
 			<uni-grid :column="2" :square="false" style="height: 100%;">
 				<uni-grid-item style="height: 100%;">
 					<view class="userinfo-operation-item">
@@ -25,8 +24,8 @@
 					</view>
 				</uni-grid-item>
 				<uni-grid-item style="height: 100%;">
-					<view class="userinfo-operation-item">
-						<text style="font-size: 60rpx;">12\n</text>
+					<view class="userinfo-operation-item" @click="toCompleteWordList">
+						<text style="font-size: 60rpx;">{{completeWordCount}}\n</text>
 						<view class="">
 							<span class="iconfont icon-qiandao"></span>
 							<text style="font-size: 40rpx;">
@@ -56,12 +55,14 @@
 
 <script>
 	import businessApi from "../../request/BusinessApi.js"
+	import UserApi from "../../request/UserApi.js"
 
 	export default {
 		data() {
 			return {
 				message: "",
 				msgType: "success",
+				completeWordCount:0
 			}
 		},
 		computed: {
@@ -73,11 +74,13 @@
 			}
 		},
 		methods: {
+			//弹出消息
 			popMessage(type, msg) {
 				this.msgType = type
 				this.message = msg
 				this.$refs.popup.open("top")
 			},
+			//登录
 			login() {
 				let _this = this;
 				//获取用户信息
@@ -99,6 +102,7 @@
 										let result = res.data
 										if (result.code === 200) { //登陆成功
 											_this.$store.dispatch("login", res.data.data)
+											_this.getUserExtraInfo()
 											_this.popMessage("success", "登陆成功")
 											uni.hideLoading()
 										} else {
@@ -127,13 +131,27 @@
 					}
 				})
 			},
+			getUserExtraInfo(){
+				let _this = this
+				UserApi.getCompleteWordCount().then(res =>{
+					if(res.data.code === 200){
+						_this.completeWordCount = res.data.data
+					}
+				})
+			}
 
 		},
-		onLoad: function() {}
+		onLoad: function() {},
+		onShow(){
+			let _this = this
+			if(_this.isLogin){
+				_this.getUserExtraInfo()
+			}
+		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.body {
 		height: 100%;
 		width: calc(100%-10rpx);

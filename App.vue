@@ -41,7 +41,7 @@
 	@import "@/static/css/iconfont.css";
 	page{
 		height: 100%;
-		overflow: hidden;
+		/* overflow: hidden; */
 	}
 	.body{
 		background-color: #f1f1f1;

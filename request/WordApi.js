@@ -23,9 +23,21 @@ const learnComplete = data =>{
 	})
 }
 
+const getCompleteWordList = data =>{
+	return Request({
+		url:baseURL + 'word/getAllCompleteWord',
+		method:"POST",
+		header:{
+			"Content-Type":"application/x-www-form-urlencoded"
+		},
+		data:data
+	})
+}
+
 const WordApi = {
 	getRequestWords,
 	getWordOptions,
-	learnComplete
+	learnComplete,
+	getCompleteWordList
 }
 export default WordApi

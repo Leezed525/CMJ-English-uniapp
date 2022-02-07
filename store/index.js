@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import businessApi from "../request/BusinessApi.js"
+import UserApi from "../request/UserApi.js"
 
 
 
@@ -21,12 +22,11 @@ const actions = {
 		context.commit("LOGIN",token)
 		console.log(this)
 		this.dispatch("getUserInfo")
-		// getUserInfo()
 	},
 	//获取用户信息
 	getUserInfo(context) {
 		let _this = this;
-		businessApi.getUserInfo().then(res =>{
+		UserApi.getUserInfo().then(res =>{
 			let userInfo = res.data.data
 			uni.setStorageSync("userInfo",JSON.stringify(userInfo))
 			context.commit("SETUSERINFO",userInfo)

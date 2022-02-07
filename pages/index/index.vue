@@ -70,18 +70,15 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.head {
 		display: flex;
 		flex-direction: row;
 		height: 30%;
 	}
-
 	.head-item {
 		width: 100%;
-
 	}
-
 	image {
 		width: 100%;
 		height: 100%;
