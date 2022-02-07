@@ -133,7 +133,6 @@
 	.learn-icon {
 		font-size: 50rpx;
 	}
-
 	.body {
 		height: 100%;
 		width: 100%;

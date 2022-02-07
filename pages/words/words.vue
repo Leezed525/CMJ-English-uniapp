@@ -283,7 +283,7 @@
 				WordApi.learnComplete(completeWords).then(res => {
 					if (res.data.code === 200) {
 						uni.redirectTo({
-							url: "../learnComplete/learnComplete"
+							url: "../learnComplete/learnComplete?type=学习&count=" + _this.requestWords.length
 						})
 					} else {
 						uni.navigateBack()
