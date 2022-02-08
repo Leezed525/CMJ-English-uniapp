@@ -34,10 +34,19 @@ const getCompleteWordList = data =>{
 	})
 }
 
+const forgetWord = data =>{
+	return Request({
+		url:baseURL + 'word/forgetWord',
+		method:"POST",
+		data:data
+	})
+}
+
 const WordApi = {
 	getRequestWords,
 	getWordOptions,
 	learnComplete,
-	getCompleteWordList
+	getCompleteWordList,
+	forgetWord
 }
 export default WordApi

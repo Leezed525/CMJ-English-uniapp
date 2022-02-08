@@ -138,6 +138,12 @@
 						_this.completeWordCount = res.data.data
 					}
 				})
+			},
+			//跳转到单词列表
+			toCompleteWordList(){
+				uni.navigateTo({
+					url:"../completeWordList/completeWordList"
+				})
 			}
 
 		},
