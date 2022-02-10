@@ -9,7 +9,7 @@
 			<text class="">当前学习了{{total}}个单词</text>
 		</view>
 		<view class="wordlist">
-			<view class="worditem" v-for="(item,index) in completeWordList">
+			<view class="worditem" v-for="(item,index) in completeWordList" :key="index">
 				<view class="word-info">
 					<text class="word-info-main">{{item.word}}</text>
 					<text>\n{{item.symbols}}</text>
@@ -82,6 +82,7 @@
 
 <script>
 	import WordApi from "../../request/WordApi.js"
+	const innerAudioContext = uni.createInnerAudioContext()
 	export default {
 		data() {
 			return {

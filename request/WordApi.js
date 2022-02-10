@@ -42,11 +42,31 @@ const forgetWord = data =>{
 	})
 }
 
+const getRequestReviewWords = data => {
+	return Request({
+		url: baseURL + 'word/getReviewWordsByNumber',
+		data: data
+	})
+}
+
+const reviewComplete = data =>{
+	return Request({
+		url:baseURL + 'word/reviewComplete',
+		method:"POST",
+		header:{
+			"Content-Type":"application/x-www-form-urlencoded"
+		},
+		data:data
+	})
+}
+
 const WordApi = {
 	getRequestWords,
+	getRequestReviewWords,
 	getWordOptions,
 	learnComplete,
 	getCompleteWordList,
-	forgetWord
+	forgetWord,
+	reviewComplete
 }
 export default WordApi

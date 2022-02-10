@@ -26,7 +26,7 @@
 					</view>
 				</button>
 			</view>
-			<view class="button-box">
+			<view class="button-box" @click="toReview">
 				<button class="btn">
 					<view>
 						<text>\nreview</text>
@@ -102,6 +102,25 @@
 				if(_this.$store.state.isLogin == true){
 					uni.navigateTo({
 						url:"../words/words"
+					})
+				}else{
+					uni.showModal({
+						content:"请先登录",
+						showCancel:false,
+						success(){
+							uni.switchTab({
+								url:"../user/user"
+							})
+						}
+					})
+				}
+			},
+			toReview(){
+				//判断
+				let _this = this;
+				if(_this.$store.state.isLogin == true){
+					uni.navigateTo({
+						url:"../review/review"
 					})
 				}else{
 					uni.showModal({

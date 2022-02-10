@@ -42,7 +42,16 @@
 				"navigationBarTitleText": "个人信息"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/review/review",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
