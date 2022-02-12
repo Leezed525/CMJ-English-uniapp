@@ -14,7 +14,7 @@
 			<uni-grid :column="2" :square="false" style="height: 100%;">
 				<uni-grid-item style="height: 100%;">
 					<view class="userinfo-operation-item">
-						<text style="font-size: 60rpx;">12\n</text>
+						<text style="font-size: 60rpx;">{{signInDays}}\n</text>
 						<view class="">
 							<span class="iconfont icon-qiandao"></span>
 							<text style="font-size: 40rpx;">
@@ -62,7 +62,8 @@
 			return {
 				message: "",
 				msgType: "success",
-				completeWordCount:0
+				completeWordCount:0,
+				signInDays:0,
 			}
 		},
 		computed: {
@@ -136,6 +137,11 @@
 				UserApi.getCompleteWordCount().then(res =>{
 					if(res.data.code === 200){
 						_this.completeWordCount = res.data.data
+					}
+				})
+				UserApi.getSigninDays().then(res =>{
+					if(res.data.code === 200){
+						_this.signInDays = res.data.data
 					}
 				})
 			},

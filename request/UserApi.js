@@ -7,15 +7,35 @@ const getUserInfo = data => {
 	})
 }
 
-const getCompleteWordCount = data =>{
+const getCompleteWordCount = data => {
 	return Request({
-		url:baseURL + "word/getCompleteWordCount"
+		url: baseURL + "word/getCompleteWordCount"
 	})
 }
 
+const getSigninDays = data => {
+	return Request({
+		url: baseURL + "signin/getSigninDays"
+	})
+}
+
+const signinToday = data =>{
+	return Request({
+		url: baseURL + "signin/signinToday"
+	})
+}
+
+const getTodaySignInStatus = data =>{
+	return Request({
+		url:baseURL + "signin/getTodaySignInStatus"
+	})
+}
 
 const UserApi = {
 	getUserInfo,
-	getCompleteWordCount
+	getCompleteWordCount,
+	getSigninDays,
+	signinToday,
+	getTodaySignInStatus
 }
 export default UserApi

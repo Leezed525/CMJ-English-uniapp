@@ -8,7 +8,7 @@
 				{{translated}}
 			</text>
 		</view>
-		<view class="sign">
+		<view class="sign" @click="signinToday">
 			<view class="button-box">
 				<button class="btn btn-qiandao" plain="true">
 					<view>
@@ -41,6 +41,7 @@
 
 <script>
 	import BusinessApi from "../../request/BusinessApi.js"
+	import UserApi from "../../request/UserApi.js"
 	const innerAudioContext = uni.createInnerAudioContext();
 	
 	//获取时区时间
@@ -133,6 +134,14 @@
 						}
 					})
 				}
+			},
+			signinToday(){
+				let _this = this
+				UserApi.signinToday().then(res =>{
+					if(res.data.code === 200){
+						_this.isSignIn = true
+					}
+				})
 			}
 		},
 		onLoad() {
@@ -144,6 +153,14 @@
 			});
 			_this.getDaliySentence()
 			uni.hideLoading()
+		},
+		onShow() {
+			let _this = this
+			UserApi.getTodaySignInStatus().then(res =>{
+				if(res.data.code === 200){
+					_this.isSignIn = res.data.data
+				}
+			})
 		}
 	}
 </script>
