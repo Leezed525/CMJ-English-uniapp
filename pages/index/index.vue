@@ -1,6 +1,6 @@
 <template>
 	<view class="body">
-		
+
 		<swiper class="swiper" :indicator-dots="true" :autoplay="true" :circular="true">
 			<swiper-item>
 				<image mode="aspectFill" src="../../static/image/banner1.png"></image>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+	import UserApi from "../../request/UserApi.js"
 	export default {
 		data() {
 			return {
@@ -44,20 +45,10 @@
 							name: '自定义消息头',
 						}
 					},
-					{
-						date: '2022-01-24',
-						info: '签到',
-						data: {
-							custom: '自定义信息',
-							name: '自定义消息头',
-						}
-					},
 				]
 			}
 		},
-		onLoad() {
 
-		},
 		methods: {
 			confirm(val) {
 				console.log(val)
@@ -66,6 +57,28 @@
 			clickCalendar(e) {
 				console.log(e)
 			},
+		},
+		onLoad() {
+
+		},
+		onShow() {
+			let _this = this
+			let selectedDays = _this.selectedDays
+			UserApi.getSignInfo().then(res => {
+				if(res.data.code === 200){
+					let list = res.data.data
+					selectedDays = []
+					list.forEach(item =>{
+						let tmp ={
+							date:item.signInDate,
+							info:"已签到",
+							data:{}
+						}
+						selectedDays.push(tmp)	
+					})
+					_this.selectedDays = selectedDays
+				}
+			})
 		}
 	}
 </script>
@@ -76,9 +89,11 @@
 		flex-direction: row;
 		height: 30%;
 	}
+
 	.head-item {
 		width: 100%;
 	}
+
 	image {
 		width: 100%;
 		height: 100%;

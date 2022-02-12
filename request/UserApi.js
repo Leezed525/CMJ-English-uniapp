@@ -31,11 +31,18 @@ const getTodaySignInStatus = data =>{
 	})
 }
 
+const getSignInfo = data =>{
+	return Request({
+		url:baseURL + "signin/getSignInfo"
+	})
+}
+
 const UserApi = {
 	getUserInfo,
 	getCompleteWordCount,
 	getSigninDays,
 	signinToday,
-	getTodaySignInStatus
+	getTodaySignInStatus,
+	getSignInfo
 }
 export default UserApi
