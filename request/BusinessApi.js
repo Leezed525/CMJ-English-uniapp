@@ -16,9 +16,16 @@ const login = data => {
 	})
 }
 
+const getTimeForCet = data =>{
+	return Request({
+		url: baseURL + "business/getTimeForCet",
+	})
+}
+
 const BusinessApi = {
 	getDailySentence,
 	login,
+	getTimeForCet
 }
 
 export default BusinessApi
