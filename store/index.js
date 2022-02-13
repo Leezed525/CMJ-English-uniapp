@@ -20,7 +20,6 @@ const actions = {
 	login(context,token){		
 		uni.setStorageSync('AccessToken', token);
 		context.commit("LOGIN",token)
-		console.log(this)
 		this.dispatch("getUserInfo")
 	},
 	//获取用户信息

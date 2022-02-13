@@ -39,7 +39,7 @@
 
 		<view class="other">
 			<uni-list>
-				<uni-list-item title="分享" clickable @click="onClick" link>
+				<uni-list-item title="分享" clickable @click="onClick" open-type="share">
 				</uni-list-item>
 				<uni-list-item title="反馈" link to="/pages/vue/index/index" @click="onClick($event,1)">
 				</uni-list-item>
@@ -62,8 +62,8 @@
 			return {
 				message: "",
 				msgType: "success",
-				completeWordCount:0,
-				signInDays:0,
+				completeWordCount: 0,
+				signInDays: 0,
 			}
 		},
 		computed: {
@@ -132,31 +132,31 @@
 					}
 				})
 			},
-			getUserExtraInfo(){
+			getUserExtraInfo() {
 				let _this = this
-				UserApi.getCompleteWordCount().then(res =>{
-					if(res.data.code === 200){
+				UserApi.getCompleteWordCount().then(res => {
+					if (res.data.code === 200) {
 						_this.completeWordCount = res.data.data
 					}
 				})
-				UserApi.getSigninDays().then(res =>{
-					if(res.data.code === 200){
+				UserApi.getSigninDays().then(res => {
+					if (res.data.code === 200) {
 						_this.signInDays = res.data.data
 					}
 				})
 			},
 			//跳转到单词列表
-			toCompleteWordList(){
+			toCompleteWordList() {
 				uni.navigateTo({
-					url:"../completeWordList/completeWordList"
+					url: "../completeWordList/completeWordList"
 				})
 			}
 
 		},
-		onLoad: function() {},
-		onShow(){
+		Load() {},
+		onShow() {
 			let _this = this
-			if(_this.isLogin){
+			if (_this.isLogin) {
 				_this.getUserExtraInfo()
 			}
 		}

@@ -55,6 +55,11 @@
 			}
 		},
 
+		computed: {
+			isLogin() {
+				return this.$store.state.isLogin
+			}
+		},
 		methods: {
 			confirm(val) {
 				console.log(val)
@@ -64,46 +69,47 @@
 				console.log(e)
 			},
 		},
-		onLoad() {
-			let _this = this
-			BusinessApi.getTimeForCet().then(res => {
-				if (res.data.code === 200) {
-					let startTime = new Date(); // 开始时间
-					let endTime = new Date(res.data.data); // 结束时间
-					let usedTime = endTime - startTime; // 相差的毫秒数
-					let days = Math.floor(usedTime / (24 * 3600 * 1000)); // 计算出天数
-					let leavel = usedTime % (24 * 3600 * 1000); // 计算天数后剩余的时间
-					let hours = Math.floor(leavel / (3600 * 1000)); // 计算剩余的小时数
-					let leavel2 = leavel % (3600 * 1000); // 计算剩余小时后剩余的毫秒数
-					let minutes = Math.floor(leavel2 / (60 * 1000)); // 计算剩余的分钟数
-					let seconds = Math.floor(leavel2 % (60 * 1000))
-					_this.countDownTime = {
-						day: days,
-						hour: hours,
-						minute: minutes,
-						second: seconds
-					}
-				}
-			})
-		},
+		onLoad() {},
 		onShow() {
 			let _this = this
-			let selectedDays = _this.selectedDays
-			UserApi.getSignInfo().then(res => {
-				if (res.data.code === 200) {
-					let list = res.data.data
-					selectedDays = []
-					list.forEach(item => {
-						let tmp = {
-							date: item.signInDate,
-							info: "已签到",
-							data: {}
+			if (_this.isLogin) {
+				let selectedDays = _this.selectedDays
+				UserApi.getSignInfo().then(res => {
+					if (res.data.code === 200) {
+						let list = res.data.data
+						selectedDays = []
+						list.forEach(item => {
+							let tmp = {
+								date: item.signInDate,
+								info: "已签到",
+								data: {}
+							}
+							selectedDays.push(tmp)
+						})
+						_this.selectedDays = selectedDays
+					}
+				})
+				BusinessApi.getTimeForCet().then(res => {
+					if (res.data.code === 200) {
+						let startTime = new Date(); // 开始时间
+						let endTime = new Date(res.data.data); // 结束时间
+						let usedTime = endTime - startTime; // 相差的毫秒数
+						let days = Math.floor(usedTime / (24 * 3600 * 1000)); // 计算出天数
+						let leavel = usedTime % (24 * 3600 * 1000); // 计算天数后剩余的时间
+						let hours = Math.floor(leavel / (3600 * 1000)); // 计算剩余的小时数
+						let leavel2 = leavel % (3600 * 1000); // 计算剩余小时后剩余的毫秒数
+						let minutes = Math.floor(leavel2 / (60 * 1000)); // 计算剩余的分钟数
+						let seconds = Math.floor(leavel2 % (60 * 1000))
+						_this.countDownTime = {
+							day: days,
+							hour: hours,
+							minute: minutes,
+							second: seconds
 						}
-						selectedDays.push(tmp)
-					})
-					_this.selectedDays = selectedDays
-				}
-			})
+					}
+				})
+			}
+
 		}
 	}
 </script>

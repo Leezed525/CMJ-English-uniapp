@@ -43,7 +43,7 @@
 	import BusinessApi from "../../request/BusinessApi.js"
 	import UserApi from "../../request/UserApi.js"
 	const innerAudioContext = uni.createInnerAudioContext();
-	
+
 	//获取时区时间
 	function getLocalTime(i) {
 		if (typeof i !== "number") {
@@ -69,8 +69,13 @@
 				isSignIn: false
 			}
 		},
+		computed: {
+			isLogin() {
+				return this.$store.state.isLogin
+			}
+		},
 		methods: {
-			playSentence(){
+			playSentence() {
 				innerAudioContext.src = this.soundUrl
 				innerAudioContext.play()
 			},
@@ -97,48 +102,48 @@
 					})
 				})
 			},
-			toLearn(){
+			toLearn() {
 				//判断
 				let _this = this;
-				if(_this.$store.state.isLogin == true){
+				if (_this.$store.state.isLogin == true) {
 					uni.navigateTo({
-						url:"../words/words"
+						url: "../words/words"
 					})
-				}else{
+				} else {
 					uni.showModal({
-						content:"请先登录",
-						showCancel:false,
-						success(){
+						content: "请先登录",
+						showCancel: false,
+						success() {
 							uni.switchTab({
-								url:"../user/user"
+								url: "../user/user"
 							})
 						}
 					})
 				}
 			},
-			toReview(){
+			toReview() {
 				//判断
 				let _this = this;
-				if(_this.$store.state.isLogin == true){
+				if (_this.$store.state.isLogin == true) {
 					uni.navigateTo({
-						url:"../review/review"
+						url: "../review/review"
 					})
-				}else{
+				} else {
 					uni.showModal({
-						content:"请先登录",
-						showCancel:false,
-						success(){
+						content: "请先登录",
+						showCancel: false,
+						success() {
 							uni.switchTab({
-								url:"../user/user"
+								url: "../user/user"
 							})
 						}
 					})
 				}
 			},
-			signinToday(){
+			signinToday() {
 				let _this = this
-				UserApi.signinToday().then(res =>{
-					if(res.data.code === 200){
+				UserApi.signinToday().then(res => {
+					if (res.data.code === 200) {
 						_this.isSignIn = true
 					}
 				})
@@ -156,11 +161,14 @@
 		},
 		onShow() {
 			let _this = this
-			UserApi.getTodaySignInStatus().then(res =>{
-				if(res.data.code === 200){
-					_this.isSignIn = res.data.data
-				}
-			})
+			if (_this.isLogin) {
+				UserApi.getTodaySignInStatus().then(res => {
+					if (res.data.code === 200) {
+						_this.isSignIn = res.data.data
+					}
+				})
+			}
+
 		}
 	}
 </script>
@@ -169,6 +177,7 @@
 	.learn-icon {
 		font-size: 50rpx;
 	}
+
 	.body {
 		height: 100%;
 		width: 100%;
@@ -223,7 +232,7 @@
 				.btn {
 					height: 100%;
 					background-color: rgba(255, 255, 255, 0.5);
-					font-size: 50rpx; 
+					font-size: 50rpx;
 					line-height: 70rpx;
 				}
 			}
