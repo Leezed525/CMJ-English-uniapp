@@ -13,32 +13,43 @@ const getCompleteWordCount = data => {
 	})
 }
 
+const updateUserInfo = data => {
+	return Request({
+		url: baseURL + "user/updateUserInfo",
+		method: "POST",
+		data: data
+	})
+}
+
 const getSigninDays = data => {
 	return Request({
 		url: baseURL + "signin/getSigninDays"
 	})
 }
 
-const signinToday = data =>{
+const signinToday = data => {
 	return Request({
 		url: baseURL + "signin/signinToday"
 	})
 }
 
-const getTodaySignInStatus = data =>{
+const getTodaySignInStatus = data => {
 	return Request({
-		url:baseURL + "signin/getTodaySignInStatus"
+		url: baseURL + "signin/getTodaySignInStatus"
 	})
 }
 
-const getSignInfo = data =>{
+const getSignInfo = data => {
 	return Request({
-		url:baseURL + "signin/getSignInfo"
+		url: baseURL + "signin/getSignInfo"
 	})
 }
+
+
 
 const UserApi = {
 	getUserInfo,
+	updateUserInfo,
 	getCompleteWordCount,
 	getSigninDays,
 	signinToday,

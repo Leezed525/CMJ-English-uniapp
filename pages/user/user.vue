@@ -39,7 +39,7 @@
 
 		<view class="other">
 			<uni-list>
-				<uni-list-item title="分享" clickable @click="onClick" open-type="share">
+				<uni-list-item title="同步微信用户信息" clickable @click="updateUserInfo" link>
 				</uni-list-item>
 				<uni-list-item title="反馈" link to="/pages/vue/index/index" @click="onClick($event,1)">
 				</uni-list-item>
@@ -132,6 +132,7 @@
 					}
 				})
 			},
+			//获取用户附加信息
 			getUserExtraInfo() {
 				let _this = this
 				UserApi.getCompleteWordCount().then(res => {
@@ -142,6 +143,33 @@
 				UserApi.getSigninDays().then(res => {
 					if (res.data.code === 200) {
 						_this.signInDays = res.data.data
+					}
+				})
+			},
+			//更新用户信息
+			updateUserInfo(){
+				let _this = this
+				uni.getUserProfile({
+					desc:"获取您的信息以更新头像与用户名",
+					success(res){
+						console.log(res)
+						let data = res.userInfo
+						UserApi.updateUserInfo(data).then(res=>{
+							console.log(res)
+							if(res.data.code === 200){
+								uni.showToast({
+									title:res.data.msg
+								})
+								_this.$store.dispatch("getUserInfo")
+							}
+						})
+					},
+					fail(err) {
+						uni.showModal({
+							title: "抱歉",
+							content: "需要您的同意才能更新信息",
+							showCancel: false
+						})
 					}
 				})
 			},
