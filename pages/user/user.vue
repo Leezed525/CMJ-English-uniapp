@@ -41,12 +41,15 @@
 			<uni-list>
 				<uni-list-item title="同步微信用户信息" clickable @click="updateUserInfo" link>
 				</uni-list-item>
-				<uni-list-item title="反馈" link to="/pages/vue/index/index" @click="onClick($event,1)">
+				<uni-list-item title="学习图表" clickable @click="updateUserInfo" link>
 				</uni-list-item>
-				<uni-list-item title="关于我们" link="reLaunch" to="/pages/vue/index/index" @click="onClick($event,1)">
+				<uni-list-item title="意见反馈" link to="/pages/feedback/feedback" @click="onClick($event,1)">
+				</uni-list-item>
+				<uni-list-item title="关于我们" link="navigateTo" to="/pages/about/about">
 				</uni-list-item>
 			</uni-list>
 		</view>
+
 		<uni-popup ref="popup" type="message">
 			<uni-popup-message :type="msgType" :message="message" :duration="2000"></uni-popup-message>
 		</uni-popup>
@@ -147,18 +150,16 @@
 				})
 			},
 			//更新用户信息
-			updateUserInfo(){
+			updateUserInfo() {
 				let _this = this
 				uni.getUserProfile({
-					desc:"获取您的信息以更新头像与用户名",
-					success(res){
-						console.log(res)
+					desc: "获取您的信息以更新头像与用户名",
+					success(res) {
 						let data = res.userInfo
-						UserApi.updateUserInfo(data).then(res=>{
-							console.log(res)
-							if(res.data.code === 200){
+						UserApi.updateUserInfo(data).then(res => {
+							if (res.data.code === 200) {
 								uni.showToast({
-									title:res.data.msg
+									title: res.data.msg
 								})
 								_this.$store.dispatch("getUserInfo")
 							}
@@ -181,7 +182,7 @@
 			}
 
 		},
-		Load() {},
+		onLoad() {},
 		onShow() {
 			let _this = this
 			if (_this.isLogin) {

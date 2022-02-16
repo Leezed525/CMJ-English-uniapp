@@ -14,6 +14,9 @@ uni.addInterceptor('request', {
 				showCancel: false
 			})
 			store.dispatch("logout")
+			uni.switchTab({
+				url:"/pages/user/user.vue"
+			})
 		}else if(res.data.code !== 200){
 			uni.showModal({
 				title: "抱歉",
