@@ -41,7 +41,7 @@
 			<uni-list>
 				<uni-list-item title="同步微信用户信息" clickable @click="updateUserInfo" link>
 				</uni-list-item>
-				<uni-list-item title="学习图表" clickable @click="updateUserInfo" link>
+				<uni-list-item title="学习数据&图表" link to="../learnInfo/learnInfo">
 				</uni-list-item>
 				<uni-list-item title="意见反馈" link to="/pages/feedback/feedback" @click="onClick($event,1)">
 				</uni-list-item>
