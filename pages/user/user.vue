@@ -59,6 +59,7 @@
 <script>
 	import businessApi from "../../request/BusinessApi.js"
 	import UserApi from "../../request/UserApi.js"
+	import WordApi from "../../request/WordApi.js"
 
 	export default {
 		data() {
@@ -138,7 +139,7 @@
 			//获取用户附加信息
 			getUserExtraInfo() {
 				let _this = this
-				UserApi.getCompleteWordCount().then(res => {
+				WordApi.getAllCompleteWordCount().then(res => {
 					if (res.data.code === 200) {
 						_this.completeWordCount = res.data.data
 					}

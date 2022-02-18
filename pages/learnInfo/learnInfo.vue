@@ -23,7 +23,7 @@
 								</view>
 								<view class="learning-data-item-content">
 									<text class="learning-data-item-content-number">
-										12
+										{{todayCompleteWordCount}}
 									</text>
 									<text class="learning-data-item-content-unit">词</text>
 								</view>
@@ -37,7 +37,7 @@
 								</view>
 								<view class="learning-data-item-content">
 									<text class="learning-data-item-content-number">
-										12
+										{{allCompleteWordCount}}
 									</text>
 									<text class="learning-data-item-content-unit">词</text>
 								</view>
@@ -51,7 +51,7 @@
 								</view>
 								<view class="learning-data-item-content">
 									<text class="learning-data-item-content-number">
-										120
+										{{todayLearnTime}}
 									</text>
 									<text class="learning-data-item-content-unit">分钟</text>
 								</view>
@@ -65,7 +65,7 @@
 								</view>
 								<view class="learning-data-item-content">
 									<text class="learning-data-item-content-number">
-										1200
+										{{allLearnTime}}
 									</text>
 									<text class="learning-data-item-content-unit">分钟</text>
 								</view>
@@ -80,14 +80,49 @@
 
 <script>
 	import learningChart from "../../components/learningChart/learningChart.vue"
+	import WordApi from "../../request/WordApi.js"
 	export default {
 		data() {
 			return {
-
+				allCompleteWordCount: 0,
+				todayCompleteWordCount:0,
+				todayLearnTime:0,
+				allLearnTime:0
 			};
 		},
 		components: {
 			learningChart
+		},
+		methods: {
+
+		},
+		onLoad() {
+			let _this = this
+			uni.showLoading({
+				mask: true,
+				title: "加载中"
+			})
+			Promise.all([WordApi.getTodayCompleteWordCount(),WordApi.getAllCompleteWordCount(),WordApi.getLearnTimeToday(),WordApi.getAllLearnTime()]).then(values =>{
+				console.log(values)
+				let res0 = values[0]
+				if(res0.data.code === 200){
+					_this.todayCompleteWordCount = res0.data.data
+				}
+				
+				let res1 = values[1]
+				if(res1.data.code === 200){
+					_this.allCompleteWordCount = res1.data.data
+				}
+				let res2 = values[2]
+				if(res2.data.code === 200){
+					_this.todayLearnTime = res2.data.data
+				}
+				let res3 = values[3]
+				if(res3.data.code === 200){
+					_this.allLearnTime = res3.data.data
+				}
+				uni.hideLoading()
+			})
 		}
 	}
 </script>
@@ -170,13 +205,13 @@
 					.learning-data-item-content {
 						height: 75rpx;
 						padding-left: 30rpx;
-						
-						.learning-data-item-content-number{
+
+						.learning-data-item-content-number {
 							font-size: 40rpx;
 							font-weight: bold;
 						}
-						
-						.learning-data-item-content-unit{
+
+						.learning-data-item-content-unit {
 							color: #888888;
 							font-size: 25rpx;
 						}

@@ -8,37 +8,37 @@ const getRequestWords = data => {
 	})
 }
 
-const getWordOptions = data =>{
+const getWordOptions = data => {
 	return Request({
-		url:baseURL + 'word/getWordOptions',
+		url: baseURL + 'word/getWordOptions',
 		data: data
 	})
 }
 
-const learnComplete = data =>{
+const learnComplete = data => {
 	return Request({
-		url:baseURL + 'word/learnComplete',
-		method:"POST",
-		data:data
+		url: baseURL + 'word/learnComplete',
+		method: "POST",
+		data: data
 	})
 }
 
-const getCompleteWordList = data =>{
+const getCompleteWordList = data => {
 	return Request({
-		url:baseURL + 'word/getAllCompleteWord',
-		method:"POST",
-		header:{
-			"Content-Type":"application/x-www-form-urlencoded"
+		url: baseURL + 'word/getAllCompleteWord',
+		method: "POST",
+		header: {
+			"Content-Type": "application/x-www-form-urlencoded"
 		},
-		data:data
+		data: data
 	})
 }
 
-const forgetWord = data =>{
+const forgetWord = data => {
 	return Request({
-		url:baseURL + 'word/forgetWord',
-		method:"POST",
-		data:data
+		url: baseURL + 'word/forgetWord',
+		method: "POST",
+		data: data
 	})
 }
 
@@ -49,16 +49,67 @@ const getRequestReviewWords = data => {
 	})
 }
 
-const reviewComplete = data =>{
+const reviewComplete = data => {
 	return Request({
-		url:baseURL + 'word/reviewComplete',
-		method:"POST",
-		header:{
-			"Content-Type":"application/x-www-form-urlencoded"
+		url: baseURL + 'word/reviewComplete',
+		method: "POST",
+		header: {
+			"Content-Type": "application/x-www-form-urlencoded"
 		},
-		data:data
+		data: data
 	})
 }
+
+const getRecentWeekCompleteWordCount = data => {
+	return Request({
+		url: baseURL + 'word/getRecentWeekCompleteWordCount'
+	})
+}
+
+const getSumWeekCompleteWordCount = data => {
+	return Request({
+		url: baseURL + 'word/getSumWeekCompleteWordCount'
+	})
+}
+
+const getRecentWeekReviewWordCount = data => {
+	return Request({
+		url: baseURL + 'word/getRecentWeekReviewWordCount'
+	})
+}
+
+const getSumWeekReviewCount = data => {
+	return Request({
+		url: baseURL + 'word/getSumWeekReviewCount'
+	})
+}
+
+
+const getAllCompleteWordCount = data => {
+	return Request({
+		url: baseURL + "word/getCompleteWordCount"
+	})
+}
+
+const getTodayCompleteWordCount = data => {
+	return Request({
+		url: baseURL + "word/getTodayCompleteWordCount"
+	})
+}
+
+const getLearnTimeToday = data => {
+	return Request({
+		url: baseURL + "word/getLearnTimeToday"
+	})
+}
+
+const getAllLearnTime = data => {
+	return Request({
+		url: baseURL + "word/getAllLearnTime"
+	})
+}
+
+
 
 const WordApi = {
 	getRequestWords,
@@ -67,6 +118,14 @@ const WordApi = {
 	learnComplete,
 	getCompleteWordList,
 	forgetWord,
-	reviewComplete
+	reviewComplete,
+	getRecentWeekCompleteWordCount,
+	getSumWeekCompleteWordCount,
+	getRecentWeekReviewWordCount,
+	getSumWeekReviewCount,
+	getAllCompleteWordCount,
+	getTodayCompleteWordCount,
+	getLearnTimeToday,
+	getAllLearnTime
 }
 export default WordApi

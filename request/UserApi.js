@@ -7,12 +7,6 @@ const getUserInfo = data => {
 	})
 }
 
-const getCompleteWordCount = data => {
-	return Request({
-		url: baseURL + "word/getCompleteWordCount"
-	})
-}
-
 const updateUserInfo = data => {
 	return Request({
 		url: baseURL + "user/updateUserInfo",
@@ -50,7 +44,7 @@ const getSignInfo = data => {
 const UserApi = {
 	getUserInfo,
 	updateUserInfo,
-	getCompleteWordCount,
+	
 	getSigninDays,
 	signinToday,
 	getTodaySignInStatus,
