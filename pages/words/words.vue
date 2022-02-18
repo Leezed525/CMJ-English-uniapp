@@ -134,7 +134,9 @@
 				//当前单词是否已经选择正确选项
 				rightFlag: false,
 				//已经学习完成的单词
-				completeWords: []
+				completeWords: [],
+				//在该页面学习的时间
+				time: 0
 
 			};
 		},
@@ -280,15 +282,24 @@
 				console.log('学习完成了')
 				let _this = this
 				let completeWords = _this.completeWords
-				WordApi.learnComplete(completeWords).then(res => {
+				WordApi.setLearnTimeToday({
+					time:Math.floor(_this.time / 60)
+				}).then(res => {
 					if (res.data.code === 200) {
-						uni.redirectTo({
-							url: "../learnComplete/learnComplete?type=学习&count=" + _this.requestWords.length
+						WordApi.learnComplete(completeWords).then(res => {
+							if (res.data.code === 200) {
+								uni.redirectTo({
+									url: "../learnComplete/learnComplete?type=学习&count=" + _this
+										.requestWords
+										.length + "&time=" + _this.time
+								})
+							} else {
+								uni.navigateBack()
+							}
 						})
-					} else {
-						uni.navigateBack()
 					}
 				})
+
 			},
 			//设置单词请求数
 			setRequestNumber() {
@@ -325,6 +336,9 @@
 		},
 		onLoad() {
 			let _this = this
+			setInterval(() => {
+				_this.time += 1
+			}, 1000)
 			uni.showLoading({
 				title: "加载中",
 				mask: true

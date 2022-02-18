@@ -110,7 +110,9 @@
 				//输入单词
 				inputWord: "",
 				//当前单词是否正确,默认正确，用于控制输入框的颜色
-				rightFlag: true
+				rightFlag: true,
+				//复习时间
+				time: 0
 			};
 		},
 		computed: {
@@ -215,16 +217,22 @@
 				let data = {
 					reviewCount: _this.reviewCount
 				}
-				WordApi.reviewComplete(data).then(res => {
+				WordApi.setLearnTimeToday({
+					time:Math.floor(_this.time / 60)
+				}).then(res => {
 					if (res.data.code === 200) {
-						uni.redirectTo({
-							url: "../learnComplete/learnComplete?type=复习&count=" + _this.reviewCount
+						WordApi.reviewComplete(data).then(res => {
+							if (res.data.code === 200) {
+								uni.redirectTo({
+									url: "../learnComplete/learnComplete?type=复习&count=" + _this
+										.reviewCount + "&time=" + _this.time
+								})
+							} else {
+								uni.navigateBack()
+							}
 						})
-					} else {
-						uni.navigateBack()
 					}
 				})
-				console.log("复习完成")
 			},
 			//设置请求个数
 			setRequestNumber() {
@@ -260,6 +268,9 @@
 		},
 		onLoad() {
 			let _this = this
+			setInterval(() => {
+				_this.time += 1
+			}, 1000)
 			_this.getRequestWords()
 		}
 	}

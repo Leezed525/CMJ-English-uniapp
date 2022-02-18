@@ -13,7 +13,10 @@
 				</view>
 				<view class="info-item">
 					<view>用户名：{{userInfo.nickname}}</view>
-		 	</view>
+				</view>
+				<view class="info-item">
+					<view>用时：{{Math.floor(time / 60)}}:{{time % 60}}</view>
+				</view>
 			</view>
 		</view>
 		<view class="operations">
@@ -31,62 +34,63 @@
 	export default {
 		data() {
 			return {
-				count:10,
-				type:'学习'
+				count: 10,
+				type: '学习',
+				time: 0
 			};
 		},
-		computed:{
-			userInfo(){
+		computed: {
+			userInfo() {
 				return this.$store.state.userInfo
 			}
 		},
-		methods:{
-			toHome(){
+		methods: {
+			toHome() {
 				uni.switchTab({
-					url:"../learn/learn"
+					url: "../learn/learn"
 				})
 			}
 		},
-		onLoad(option){
+		onLoad(option) {
 			console.log(option)
 			this.count = option.count || "10"
 			this.type = option.type || "学习"
+			this.time = option.time || 0
 		}
 	}
 </script>
 
 <style lang="scss">
 	.bodystyle {
-	  width: 100%;
-	  height: 100%;
-	  position: absolute;
-	  background-color: #fff;
-	  background-repeat: no-repeat;
-	  background-size: 100% 100%;
-	  background-attachment: fixed;
-	}
-	
-	.content {
-	  width: 100%;
-	  height: 80%;
-	  display: flex;
-	  flex-direction: column;
-	  background-color: white;
-	  align-items: center;
-	  justify-content: center;
-	}
-	
-	.wanchengImg span {
-	  font-size: 250rpx;
-	  color: greenyellow;
-	}
-	
-	.congratulation text {
-	  font-size: 50rpx;
-	}
-	
-	.info-item view {
-	  font-size: 40rpx;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background-color: #fff;
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		background-attachment: fixed;
 	}
 
+	.content {
+		width: 100%;
+		height: 80%;
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.wanchengImg span {
+		font-size: 250rpx;
+		color: greenyellow;
+	}
+
+	.congratulation text {
+		font-size: 50rpx;
+	}
+
+	.info-item view {
+		font-size: 40rpx;
+	}
 </style>

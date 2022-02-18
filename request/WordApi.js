@@ -109,6 +109,17 @@ const getAllLearnTime = data => {
 	})
 }
 
+const setLearnTimeToday = data => {
+	return Request({
+		url: baseURL + 'word/setLearnTimeToday',
+		method: "POST",
+		header: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		data: data
+	})
+}
+
 
 
 const WordApi = {
@@ -126,6 +137,7 @@ const WordApi = {
 	getAllCompleteWordCount,
 	getTodayCompleteWordCount,
 	getLearnTimeToday,
-	getAllLearnTime
+	getAllLearnTime,
+	setLearnTimeToday
 }
 export default WordApi
