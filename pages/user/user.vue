@@ -2,7 +2,7 @@
 	<view class="body">
 		<view class="userinfo-box" @click="login()">
 			<view class="userinfo-face">
-				<image :src="isLogin?userInfo.avatarUrl:'../../static/image/face.jpg'" mode="widthFix">
+				<image :src="isLogin?userInfo.avatarUrl:'https://s4.ax1x.com/2022/02/18/HThAFH.jpg'" mode="widthFix">
 				</image>
 			</view>
 			<view class="userinfo-name">
@@ -39,16 +39,20 @@
 
 		<view class="other">
 			<uni-list>
+				<uni-list-item title="公告列表" :show-badge="true" :badge-text="noticeCount" badgeType="error" to="../noticeList/noticeList" link>
+				</uni-list-item>
 				<uni-list-item title="同步微信用户信息" clickable @click="updateUserInfo" link>
 				</uni-list-item>
 				<uni-list-item title="学习数据&图表" link to="../learnInfo/learnInfo">
 				</uni-list-item>
-				<uni-list-item title="意见反馈" link to="/pages/feedback/feedback" @click="onClick($event,1)">
+				<uni-list-item title="意见反馈" link to="/pages/feedback/feedback">
 				</uni-list-item>
 				<uni-list-item title="关于我们" link="navigateTo" to="/pages/about/about">
 				</uni-list-item>
 			</uni-list>
 		</view>
+		
+		
 
 		<uni-popup ref="popup" type="message">
 			<uni-popup-message :type="msgType" :message="message" :duration="2000"></uni-popup-message>
@@ -68,6 +72,7 @@
 				msgType: "success",
 				completeWordCount: 0,
 				signInDays: 0,
+				noticeContent:'<p><br></p><p><span class="ql-size-huge">123</span></p><p class="ql-indent-2"><s class="ql-size-huge">123</s></p>'
 			}
 		},
 		computed: {
@@ -76,6 +81,15 @@
 			},
 			isLogin() {
 				return this.$store.state.isLogin
+			},
+			noticeCount(){
+				let count = 0
+				this.$store.state.noticeList.forEach(item=>{
+					if(item.status === 0){
+						count += 1
+					}
+				})
+				return count
 			}
 		},
 		methods: {

@@ -2,13 +2,13 @@
 	<view class="body">
 		<swiper class="swiper" :indicator-dots="true" :autoplay="true" :circular="true">
 			<swiper-item>
-				<image mode="aspectFill" src="../../static/image/banner1.png"></image>
+				<image mode="aspectFill" src="https://s4.ax1x.com/2022/02/18/HTh9OK.png"></image>
 			</swiper-item>
 			<swiper-item>
-				<image mode="aspectFill" src="../../static/image/banner2.png"></image>
+				<image mode="aspectFill" src="https://s4.ax1x.com/2022/02/18/HThFTe.png"></image>
 			</swiper-item>
 			<swiper-item>
-				<image mode="aspectFill" src="../../static/image/banner3.png"></image>
+				<image mode="aspectFill" src="https://s4.ax1x.com/2022/02/18/HThiwD.png"></image>
 			</swiper-item>
 		</swiper>
 		<view>

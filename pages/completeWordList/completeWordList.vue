@@ -145,7 +145,6 @@
 					title: "警告",
 					content: "您确定要删除这个单词吗？该单词会重新添加进你的学习计划中",
 					success(e) {
-						console.log(e)
 						if (e.confirm) {
 							let word = _this.completeWordList[index]
 							WordApi.forgetWord(word).then(res => {
@@ -180,7 +179,6 @@
 						page: _this.page
 					}
 					WordApi.getCompleteWordList(data).then(res => {
-						console.log(res)
 						if (res.data.code === 200) {
 							let result = res.data.data
 							_this.total = result.total
